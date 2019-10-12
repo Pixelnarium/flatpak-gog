@@ -156,6 +156,11 @@ def main():
         gameinfo['arch'] = 'x86_64'
     if gameinfo['arch'] == 'i386+x86_64':
         gameinfo['arch'] = 'x86_64'
+    elif gameinfo['arch'] == 'i386':
+        # runtime 19.08 does not support pure i386 tagets
+        # TODO cross-compile possible dependencies and run the game in a multi-arch env
+        # set 18.08 runtime for now
+        jsondata['runtime-version'] = '18.08'
 
     # app-id cannot start with a digit. Add an underscore if needed.
     if gameinfo['name'][0].isdigit():
@@ -173,8 +178,8 @@ def main():
               "flatpak-builder --user --install build {0}/{1} --force-clean "
               "--arch {2}".format(os.getcwd(), outname, gameinfo['arch']))
     else:
-        print("flatpak-builder --user --install build {0}/{1} --force-clean "
-              "--arch {2}".format(os.getcwd(), outname, gameinfo['arch']))
+        print("flatpak-builder build {0}/{1} --force-clean --arch {2} --repo {3}".format(os.getcwd(), outname, gameinfo['arch'], args.repo))
+        print("rm -rf build .flatpak-builder")
 
 if __name__ == '__main__':
     main()
