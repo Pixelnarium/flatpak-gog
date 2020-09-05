@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd /app/game/game/
-
-ln -s /app/lib/libSDL2-2.0.so.0 lib64/
+rm lib64/libSDL*
+ln -fs /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 lib64/
